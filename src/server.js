@@ -4,6 +4,7 @@ const Hapi = require('hapi');
 const Path = require('path');
 // Create a server with a host and port
 const server = new Hapi.Server();
+const port =  process.env.PORT
 server.connection({
     port: process.env.PORT,
     routes: { cors: true }
@@ -42,7 +43,7 @@ server.register([
       html: require('handlebars')
     },
     relativeTo: __dirname,
-    path: '../public'
+    path: '../build'
   });
 });
 

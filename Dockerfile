@@ -14,4 +14,5 @@ COPY . /opt/app
 
 EXPOSE 3001
 
+CMD ["npm", "install"]
 CMD ["npm", "start"]
