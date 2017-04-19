@@ -34,7 +34,6 @@ function create(request, reply) {
 
 function update(request, reply) {
     const entry = request.pre.entry;
-
     entry.set(request.payload);
 
     entry.save()

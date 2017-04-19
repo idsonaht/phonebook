@@ -5,12 +5,16 @@ class PhoneBook extends Component {
     this.props.onDelete(id)
   }
 
+  editPerson(id, person){
+    this.props.onEdit(id, person)
+  }
+
   render() {
     let persons;
     if(this.props.phonebook){
       persons = this.props.phonebook.map(person =>{
         return (
-          <Person onDelete={this.deletePerson.bind(this)} key={person._id} person={person} />
+          <Person onDelete={this.deletePerson.bind(this)} key={person._id} person={person} onEdit={this.editPerson.bind(this)} key={person._id} person={person} />
         );
       });
     }
@@ -28,7 +32,8 @@ class PhoneBook extends Component {
 /* Validation */
 PhoneBook.propTypes = {
   phonebook: React.PropTypes.array,
-  onDelete: React.PropTypes.func
+  onDelete: React.PropTypes.func,
+  onEdit: React.PropTypes.func
 }
 
 export default PhoneBook;

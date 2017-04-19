@@ -60,7 +60,7 @@ class App extends Component {
      })
      .then( (data) => {
         let phonebook = component.state.phonebook;
-        phonebook.push(person);
+        phonebook.push(data);
         this.setState({phonebook:phonebook});
      })
      .catch( (ex) => {
@@ -96,7 +96,39 @@ class App extends Component {
      .catch( (ex) => {
          console.log(ex);
      });
+  }
 
+  handleEditPerson(id, person){
+    var component = this;
+    var url = component.state.url + '/' + id;
+
+    fetch(
+      url,
+      {
+        method: 'PATCH',
+        body: JSON.stringify(person),
+        headers: {
+        'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
+        'Content-Type': 'application/json; charset=utf-8'
+        }
+      }
+    )
+     .then( (response) => {
+        if (!response.ok) {
+            throw Error(response.statusText);
+        }
+        return response
+     })
+     .then( (data) => {
+       let phonebook = component.state.phonebook;
+       let obj  = phonebook.find(x => x._id === id);
+       let index = phonebook.indexOf(obj);
+       phonebook[index] = person;
+       this.setState({phonebook:phonebook});
+     })
+     .catch( (ex) => {
+         console.log(ex);
+     });
   }
 
   render() {
@@ -108,7 +140,7 @@ class App extends Component {
         </div>
         <AddPerson addPerson={this.handleAddPerson.bind(this)} />
         <br/>
-        <PhoneBook phonebook={this.state.phonebook} onDelete={this.handleDeletePerson.bind(this)}/>
+        <PhoneBook phonebook={this.state.phonebook} onDelete={this.handleDeletePerson.bind(this)} onEdit={this.handleEditPerson.bind(this)}/>
       </div>
     );
   }
